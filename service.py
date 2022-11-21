@@ -23,7 +23,7 @@ app = FastAPI(openapi_url=None)
 tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_ID)
 model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_ID)
 pipeline = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
-df = pd.read_csv(os.path.join('resources', 'oracle_supported_intents.csv'))
+df = pd.read_csv(os.path.join('intent_dataset', 'intents.csv'))
 model_trained_intents = df['intent'].apply(str.strip).to_list()
 
 log.info('Service is ready')
@@ -36,6 +36,11 @@ def get_model_predictions(candidates):
     intent_scores = np.max(intent_scores, axis=1)
     model_intents = [model_trained_intents[intent_id] for intent_id in intent_ids]
     return model_intents, intent_scores.tolist()
+
+
+@app.get("/")
+def read_root():
+    return "VIRA Intent Classification"
 
 
 @app.get("/health")
