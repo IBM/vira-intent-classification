@@ -51,13 +51,13 @@ And in addition:
 4. Activate the virtual environment using: `source venv/bin/activate`
 5. Install the dependencies using: `pip install -r requirements.txt`
 6. Deactivate the virtual environment by running: `deactivate`
+7. Register at [🤗 Hugging Face](https://huggingface.co) and obtain your authentication token from the [tokens page](https://huggingface.co/settings/tokens)
 
 To train a new model:
 1. Make sure you are using the latest version of the repo using the command `git pull`
 2. Activate the virtual environment using: `source venv/bin/activate` 
-3. Run the trainer script `python train.py` and wait until it finishes
-4. Obtain your authentication token from [https://huggingface.co/settings/tokens](🤗 Hugging Face)
-5. Upload the new model and the dataset to HuggingFace hub using the command: `python upload.py <your_auth_token>`.  
+3. Run the trainer script `python trainer.py` and wait until it finishes
+4. Upload the new model and the dataset to HuggingFace hub using the command: `python upload.py <your_auth_token>`.  
 
 
 ### Deploying an intent classification model
