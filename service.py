@@ -2,17 +2,22 @@
 # Copyright 2020- IBM Inc. All rights reserved
 # SPDX-License-Identifier: Apache2.0
 #
+
+import logging.config
 import os
 
 import numpy as np
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI
-from transformers import AutoTokenizer,  AutoModelForSequenceClassification, TextClassificationPipeline
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TextClassificationPipeline
 
 from consts import HF_MODEL_ID
 
+logging.config.fileConfig('logging.conf')
+log = logging.getLogger('services.dialog')
 
+log.info('Initiating service')
 app = FastAPI(openapi_url=None)
 
 tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_ID)
@@ -20,6 +25,8 @@ model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_ID)
 pipeline = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
 df = pd.read_csv(os.path.join('resources', 'oracle_supported_intents.csv'))
 model_trained_intents = df['intent'].apply(str.strip).to_list()
+
+log.info('Service is ready')
 
 
 def get_model_predictions(candidates):
@@ -29,6 +36,11 @@ def get_model_predictions(candidates):
     intent_scores = np.max(intent_scores, axis=1)
     model_intents = [model_trained_intents[intent_id] for intent_id in intent_ids]
     return model_intents, intent_scores.tolist()
+
+
+@app.get("/health")
+def read_root():
+    return "OK"
 
 
 @app.get("/classify")
