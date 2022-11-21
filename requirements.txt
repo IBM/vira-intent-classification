@@ -1,0 +1,9 @@
+numpy
+pandas
+transformers
+datasets
+fastapi
+uvicorn[standard]
+torch
+scikit-learn
+evaluate
