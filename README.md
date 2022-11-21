@@ -99,7 +99,7 @@ If you would like to see the detailed LICENSE click [here](LICENSE).
 #
 ```
 
-## More Information: 
+## More Information
 
 More information can be found in these files:
 * [LICENSE](LICENSE)
