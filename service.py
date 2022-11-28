@@ -30,6 +30,7 @@ log.info('Service is ready')
 
 
 def get_model_predictions(candidates):
+    log.info('Getting model predictions')
     results = pipeline(candidates)
     intent_scores = np.array([[label['score'] for label in result] for result in results])
     intent_ids = np.argmax(intent_scores, axis=1)
