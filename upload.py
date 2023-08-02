@@ -12,7 +12,7 @@ from consts import HF_DATASET_ID
 from utils import read_dataset
 
 logging.config.fileConfig('logging.conf')
-log = logging.getLogger('services.dialog')
+log = logging.getLogger('main')
 
 model_args = {
     'repo_id': HF_MODEL_ID,

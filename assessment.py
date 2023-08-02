@@ -16,8 +16,9 @@ def tune_threshold():
 
     prediction_classes, prediction_scores = get_model_predictions(candidates)
     y_labels = label_binarize(df['label_idx'].tolist(), classes=[i for i in range(num_classes)])
-    y_scores = np.array([[score if i == model_trained_intents.index(pred_class) else 0 for i in range(num_classes)]
-                         for score, pred_class in zip(prediction_scores, prediction_classes)])
+    y_scores = np.array([[scores[0] if i == model_trained_intents.index(pred_classes[0]) else 0
+                          for i in range(num_classes)]
+                         for scores, pred_classes in zip(prediction_scores, prediction_classes)])
 
     precision, recall, thresholds = precision_recall_curve(
             y_labels.ravel(), y_scores.ravel()
